@@ -21,7 +21,7 @@ import sun.nio.cs.ext.IBM037;
 public class EmailClient {
 
     List<Folder> folders;
-
+    private Folder root;
     Folder inbox;
     Folder sent;
     Folder trash;
@@ -31,40 +31,53 @@ public class EmailClient {
     IBehavior move = new Moveable();
 
     public EmailClient() {
-
-        inbox = new Folder("imbox");
-        sent = new Folder("sent");
-        trash = new Folder("trash");
-        folders = new ArrayList<>();
         
-        inbox.getBehaviors().add(softDelete);
-        inbox.getBehaviors().add(move);
+        root = new Folder("root");
         
-        sent.getBehaviors().add(softDelete);
-        sent.getBehaviors().add(move);
 
-        trash.getBehaviors().add(move);
-        trash.getBehaviors().add(hardDelete);
+        inbox = root.addFolder("imbox");
+        sent = root.addFolder("sent");
+        trash = root.addFolder("trash");
+        
+        
+        inbox.addBehavior(softDelete);
+        inbox.addBehavior(move);
+        
+        sent.addBehavior(softDelete);
+        sent.addBehavior(move);
 
-        folders.add(inbox);
-        folders.add(sent);
-        folders.add(trash);
+        trash.addBehavior(move);
+        trash.addBehavior(hardDelete);
+
+        
 
     }
     
-    public void addEmail(String body, String subject){
+    public void receive(String body, String subject){
         Email email = new Email();
         email.setBody(body);
         email.setSubject(subject);
+        
         //TODO reglas para seleccionar folder
         inbox.addEmail(email);
     }
 
-    void addFolder(String name, Folder parent) {        
-        Folder folder = new Folder(name);        
-        folder.setName(name);
-        folder.setParent(parent);
-        folders.add(folder);
+    Folder addFolder(String name) { 
+        return root.addFolder(name);        
     }
+    void addFolder(String name, String parent){
+        
+        Folder parentFolder = getFolderByName(parent);
+        if(parentFolder != null)
+            parentFolder.addFolder(name);
+    }
+    
+    Folder getFolderByName(String name){
+        return root.find(name);
+    }
+    void print(){
+        root.print();
+    }
+    
 
 }

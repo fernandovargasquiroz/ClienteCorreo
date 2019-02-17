@@ -16,14 +16,18 @@ public class TestClient {
     
     public static void main(String[] args) {
         // TODO code application logic here
-        
+        String parentFolder = "SPAM";
         EmailClient emailClient = new EmailClient();
         System.out.println("emailClient: " + emailClient.toString());
-      
-        emailClient.addFolder("Span",null);
-        System.out.println(" emailClient: " +emailClient.folders.toString());
         
-        //correoPrueba.delete();
+        Folder spam = emailClient.addFolder(parentFolder);
+        emailClient.addFolder("Span2", spam.getName());
+        
+        
+        emailClient.addFolder("Span2.1", "Span2");
+        
+        emailClient.print();
+        // 
         
     }
 }
