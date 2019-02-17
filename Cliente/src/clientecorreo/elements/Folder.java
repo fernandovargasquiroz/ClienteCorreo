@@ -74,7 +74,7 @@ public class Folder implements IContainer{
         return folder;
     }
     
-    public Folder addFolder(String name, String parent){
+    public Folder addFolder(String name, String parent) throws Exception{
         Folder parentFolder = this.find(parent);
         if(parentFolder != null)
             return parentFolder.addFolder(name);
@@ -88,17 +88,25 @@ public class Folder implements IContainer{
     }
     public void print(){
         System.out.println(this.getName());
+        printMessages();
         for (Folder folder : folders) {
             System.out.print(" --- ");
             folder.print();    
         }
     }
-    public Folder find(String name){
-        for (Folder folder : folders) {
-            if(folder.getName().equals(name))
-                return folder;
-            else
-                return folder.find(name);
+    public Folder find(String name) throws Exception{
+            for (Folder folder : folders) {
+                if(folder.getName().equals(name))
+                    return folder;
+                else 
+                    if(folder.getFolders().size() > 0)
+                        return folder.find(name);
+            }    
+        throw new Exception("No existe el folder!!");
+    }
+    public void printMessages(){
+        for (Email mail : emails) {
+            System.out.println(" >>> "+ mail.getSubject());
         }
     }
 }

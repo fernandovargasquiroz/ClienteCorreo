@@ -10,6 +10,41 @@ package clientecorreo.elements;
  * @author Favio
  */
 public class Email {
+
+    /**
+     * @return the from
+     */
+    public String getFrom() {
+        return from;
+    }
+
+    /**
+     * @return the sent
+     */
+    public String getSent() {
+        return sent;
+    }
+
+    /**
+     * @return the subject
+     */
+    public String getSubject() {
+        return subject;
+    }
+
+    /**
+     * @return the cc
+     */
+    public String getCc() {
+        return cc;
+    }
+
+    /**
+     * @return the body
+     */
+    public String getBody() {
+        return body;
+    }
  
  private String from;
  private String sent;

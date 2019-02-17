@@ -56,23 +56,21 @@ public class EmailClient {
     public void receive(String body, String subject){
         Email email = new Email();
         email.setBody(body);
-        email.setSubject(subject);
-        
+        email.setSubject(subject);        
         //TODO reglas para seleccionar folder
-        inbox.addEmail(email);
+           inbox.addEmail(email);
     }
 
     Folder addFolder(String name) { 
         return root.addFolder(name);        
     }
-    void addFolder(String name, String parent){
-        
+    void addFolder(String name, String parent) throws Exception{        
         Folder parentFolder = getFolderByName(parent);
         if(parentFolder != null)
             parentFolder.addFolder(name);
     }
     
-    Folder getFolderByName(String name){
+    Folder getFolderByName(String name) throws Exception{
         return root.find(name);
     }
     void print(){

@@ -6,7 +6,7 @@
 package clientecorreo.rules;
 
 /**
- *
+ *aaaaa
  * @author Favio
  */
 public class Rule {
